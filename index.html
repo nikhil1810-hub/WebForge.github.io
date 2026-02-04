@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>WebForge — Web Design Studio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#000;
+  --ink:#eaeaea;
+  --muted:#9a9a9a;
+  --accent:#c6a15b;
+  --line:#1a1a1a;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,sans-serif;
+  letter-spacing:.02em;
+}
+
+/* LOADER */
+.loader{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:3000;
+  transition:opacity .8s ease;
+}
+.loader span{
+  font-family:"Playfair Display",serif;
+  font-size:2rem;
+  letter-spacing:.4em;
+  color:var(--accent);
+  animation:pulse 1.8s infinite;
+}
+@keyframes pulse{
+  0%{opacity:.3}
+  50%{opacity:1}
+  100%{opacity:.3}
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:24px 40px;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  z-index:1000;
+}
+nav a{
+  color:var(--muted);
+  text-decoration:none;
+  margin-left:32px;
+  font-size:.85rem;
+  letter-spacing:.12em;
+  position:relative;
+}
+nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:0;
+  height:1px;
+  background:var(--accent);
+  transition:.4s ease;
+}
+nav a:hover::after{width:100%}
+nav a:hover{color:var(--ink)}
+
+/* SECTIONS */
+section{
+  min-height:100vh;
+  padding:160px 40px;
+  max-width:1400px;
+  margin:auto;
+}
+
+/* HERO */
+.hero{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:120px;
+  align-items:center;
+}
+.hero h1{
+  font-family:"Playfair Display",serif;
+  font-size:5rem;
+  line-height:1.05;
+}
+.hero h1 span{color:var(--accent)}
+.hero p{
+  margin-top:32px;
+  color:var(--muted);
+  max-width:520px;
+}
+
+/* BUTTON */
+.btn{
+  display:inline-block;
+  margin-top:56px;
+  padding:14px 36px;
+  border:1px solid var(--accent);
+  color:var(--accent);
+  text-decoration:none;
+  font-size:.8rem;
+  letter-spacing:.18em;
+  position:relative;
+  overflow:hidden;
+}
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:var(--accent);
+  transform:translateX(-100%);
+  transition:.6s cubic-bezier(.2,.8,.2,1);
+  z-index:-1;
+}
+.btn:hover::after{transform:translateX(0)}
+.btn:hover{color:#000}
+
+/* TEXT */
+.statement{
+  font-family:"Playfair Display",serif;
+  font-size:2.6rem;
+  max-width:900px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:48px;
+}
+
+.card{
+  border-top:1px solid var(--line);
+  padding-top:32px;
+}
+
+.card h3{
+  font-family:"Playfair Display",serif;
+  margin-bottom:12px;
+}
+
+.price{
+  color:var(--accent);
+  font-size:1.8rem;
+  margin-bottom:16px;
+}
+
+/* PRICING DETAILS */
+.price-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.price-list li{
+  color:var(--muted);
+  font-size:.9rem;
+  margin-bottom:8px;
+}
+.price-note{
+  display:block;
+  margin-top:14px;
+  font-size:.7rem;
+  letter-spacing:.12em;
+  color:var(--accent);
+}
+
+/* FLOAT BUTTONS */
+.float-wrap{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  z-index:2000;
+}
+.float-btn{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  background:#111;
+  border:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--accent);
+  font-size:18px;
+  transition:.4s ease;
+  text-decoration:none;
+}
+.float-btn:hover{
+  background:var(--accent);
+  color:#000;
+  transform:translateY(-4px);
+}
+
+/* ANIMATIONS */
+.reveal{
+  opacity:0;
+  transform:translateY(42px);
+  animation:reveal 1.2s cubic-bezier(.2,.8,.2,1) forwards;
+}
+.reveal-delay-1{animation-delay:.15s}
+.reveal-delay-2{animation-delay:.3s}
+
+@keyframes reveal{
+  to{opacity:1;transform:translateY(0)}
+}
+
+.fade-up{
+  opacity:0;
+  transform:translateY(32px);
+  transition:1s cubic-bezier(.2,.8,.2,1);
+}
+.fade-up.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--line);
+  padding:80px 40px;
+  text-align:center;
+  color:var(--muted);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  section{
+    padding:120px 20px;
+    min-height:auto;
+  }
+  .hero{
+    grid-template-columns:1fr;
+    gap:48px;
+  }
+  .hero h1{
+    font-size:2.8rem;
+  }
+  .statement{
+    font-size:1.8rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <span>WEBFORGE</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <strong style="letter-spacing:.25em">WEBFORGE</strong>
+  <div>
+    <a href="#home">HOME</a>
+    <a href="#about">ABOUT</a>
+    <a href="#services">SERVICES</a>
+    <a href="#process">PROCESS</a>
+    <a href="#pricing">PRICING</a>
+    <a href="#contact">CONTACT</a>
+  </div>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="hero">
+  <div>
+    <h1 class="reveal">
+      Web design that<br><span>earns trust.</span>
+    </h1>
+    <p class="reveal reveal-delay-1">
+      WebForge crafts thoughtfully designed websites that project credibility,
+      confidence, and quiet authority—so businesses are chosen with certainty.
+    </p>
+    <a class="btn reveal reveal-delay-2" href="#contact">
+      START YOUR PROJECT
+    </a>
+  </div>
+</section>
+
+<section class="statement fade-up">
+  Your website should justify your price before you ever speak.
+</section>
+
+<!-- ABOUT / INTRO -->
+<section id="about">
+  <h2 class="fade-up" style="font-family:Playfair Display;font-size:3.2rem;margin-bottom:80px">
+    About
+  </h2>
+
+  <div class="grid">
+    <div class="fade-up">
+      <p style="font-size:1.15rem;line-height:1.6;color:var(--muted);max-width:560px">
+        I’m NIKHIL RAMGIRWAR founder of <span style="color:var(--ink)">WebForge</span>, a design studio
+        focused on building calm, credible, and conversion-driven websites.
+        <br><br>
+        I work with founders and businesses that value clarity, quality,
+        and long-term brand perception. Every project begins with strategy,
+        not templates.
+        <br><br>
+        The goal isn’t decoration — it’s to make your business feel
+        established, trustworthy, and worth choosing.
+      </p>
+    </div>
+
+    <div class="fade-up">
+      <div class="card">
+        <h3>What I focus on</h3>
+        <p>Clear hierarchy, refined UI, subtle motion, and trust-first layouts.</p>
+      </div>
+
+      <div class="card" style="margin-top:32px">
+        <h3>Who I work with</h3>
+        <p>Professionals, founders, and growing businesses who value seriousness.</p>
+      </div>
+
+      <div class="card" style="margin-top:32px">
+        <h3>How I work</h3>
+        <p>Limited projects, direct communication, and attention to detail.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <h2 class="fade-up" style="font-family:Playfair Display;font-size:3.2rem;margin-bottom:80px">
+    Services
+  </h2>
+  <div class="grid">
+    <div class="card fade-up">
+      <h3>Business Websites</h3>
+      <p>Trust-first websites designed to convert visitors into enquiries.</p>
+    </div>
+    <div class="card fade-up">
+      <h3>Brand Websites</h3>
+      <p>High-end digital presence for authority and positioning.</p>
+    </div>
+    <div class="card fade-up">
+      <h3>Website Redesign</h3>
+      <p>Transform outdated sites into credibility assets.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <h2 class="fade-up" style="font-family:Playfair Display;font-size:3.2rem;margin-bottom:80px">
+    Process
+  </h2>
+  <div class="grid">
+    <div class="card fade-up"><h3>Discovery</h3><p>Understanding your business and audience.</p></div>
+    <div class="card fade-up"><h3>Strategy</h3><p>Structuring content for trust and flow.</p></div>
+    <div class="card fade-up"><h3>Design</h3><p>Refined UI with premium motion.</p></div>
+    <div class="card fade-up"><h3>Build & Launch</h3><p>Fast, clean, and reliable execution.</p></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <h2 class="fade-up" style="font-family:Playfair Display;font-size:3.2rem;margin-bottom:80px">
+    Pricing
+  </h2>
+
+  <div class="grid">
+    <div class="card fade-up">
+      <h3>Starter Website</h3>
+      <p class="price">₹4,999</p>
+      <ul class="price-list">
+        <li>One-page professional website</li>
+        <li>Mobile-first & fast loading</li>
+        <li>WhatsApp & Call integration</li>
+        <li>Delivery in 3–4 days</li>
+      </ul>
+      <span class="price-note">FOR LOCAL BUSINESSES</span>
+    </div>
+
+    <div class="card fade-up">
+      <h3>Business Website</h3>
+      <p class="price">₹7,999</p>
+      <ul class="price-list">
+        <li>Up to 5 pages</li>
+        <li>Premium UI/UX</li>
+        <li>SEO-ready structure</li>
+        <li>Delivery in 6–8 days</li>
+      </ul>
+      <span class="price-note">MOST POPULAR</span>
+    </div>
+
+    <div class="card fade-up">
+      <h3>Brand Experience</h3>
+      <p class="price">Custom</p>
+      <ul class="price-list">
+        <li>High-end UI/UX & strategy</li>
+        <li>Advanced animations</li>
+        <li>Scalable, future-ready build</li>
+      </ul>
+      <span class="price-note">FOR SERIOUS BRANDS</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="statement fade-up">
+  Ready to look like a serious business?
+  <p style="margin-top:32px;font-size:1rem;color:var(--muted)">
+    📧 nikhilramgirwar20@gmail.com<br>
+    📞 7558721132 · Pune
+  </p>
+</section>
+
+<footer>
+© 2026 WEBFORGE — AUTHORITY BY DESIGN.
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div class="float-wrap">
+  <a href="tel:+917558721132" class="float-btn">📞</a>
+  <a href="https://wa.me/917558721132" target="_blank" class="float-btn">💬</a>
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nikhilramgirwar20@gmail.com" target="_blank" class="float-btn">✉️</a>
+</div>
+
+<script>
+window.addEventListener("load",()=>{
+  const l=document.getElementById("loader");
+  l.style.opacity="0";
+  setTimeout(()=>l.style.display="none",800);
+});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
+  });
+},{threshold:window.innerWidth<768?.12:.2});
+
+document.querySelectorAll(".fade-up").forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
